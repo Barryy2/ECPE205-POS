@@ -7,8 +7,9 @@ import java.util.ArrayList;
 
 public class ProductScreen extends JFrame {
 
-    ProductScreen() {
-        int size = 5;
+    private ArrayList<Prods> prods = new ArrayList<>(); // <-- class-level
+
+    public ProductScreen() {
         JLabel SKU = new JLabel("SKU: ");
         JLabel Name = new JLabel("Name: ");
         JLabel Price = new JLabel("Price: ");
@@ -18,34 +19,26 @@ public class ProductScreen extends JFrame {
         JButton Savebutt = new JButton("Save");
 
         setLayout(new GridBagLayout());
-        Container container = new Container();
 
-
-
-
-
-
-
-        //LABELS
+        // LABELS
         addComponent(0,0 , SKU);
         addComponent(0,1 , Name);
         addComponent(0 ,2,  Price);
-        //TEXTFIELDS
+        // TEXTFIELDS
         addComponent(1,0,SKUtextfield);
         addComponent(1,1,Nametextfield);
         addComponent(1,2,Pricedtextfield);
-        //Buttons
+        // BUTTON
         addComponent(1,4,Savebutt);
 
-
-        ArrayList<Prods> prods = new ArrayList<>();
+        // Table
         JTable table = new JTable(new AbstractTableModel() {
             String [] columns = new String[] {"SKU" , "Name" , "Price"};
+
+            @Override
             public String getColumnName(int column){
-
-                return  columns[column];
+                return columns[column];
             }
-
 
             @Override
             public int getRowCount() {
@@ -59,25 +52,19 @@ public class ProductScreen extends JFrame {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-
                 Prods p = prods.get(rowIndex);
                 switch (columnIndex) {
-                    case 0:
-                        return p.getSku();
-                    case 1:
-                        return p.getName();
-                    case 2:
-                        return p.getPrice();
-                    default:
-                        return null;
+                    case 0: return p.getSku();
+                    case 1: return p.getName();
+                    case 2: return p.getPrice();
+                    default: return null;
                 }
             }
         });
 
         addComponent(0,5, 2,new JScrollPane(table) );
 
-
-
+        // SAVE BUTTON
         Savebutt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,45 +85,40 @@ public class ProductScreen extends JFrame {
             }
         });
 
-
-
-
         setTitle("ProductScreen");
         setSize(400, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         pack();
-
     }
 
+    // -----------------------------
+    // GETTER for external access
+    // -----------------------------
+    public ArrayList<Prods> getProductList() {
+        return prods;
+    }
 
-
-
-
-
-
-
-
-
-        private  void addComponent (int x , int y , int width , Component c   ){
+    // -----------------------------
+    // AddComponent Methods
+    // -----------------------------
+    private void addComponent(int x , int y , int width , Component c){
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = x;
         constraints.gridy = y;
         constraints.gridwidth = width;
         add(c ,constraints);
-            constraints.anchor = GridBagConstraints.CENTER;
-
+        constraints.anchor = GridBagConstraints.CENTER;
     }
 
-   private void addComponent (int x , int y , Component c   ){
+    private void addComponent(int x , int y , Component c){
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = x;
         constraints.gridy = y;
         add(c ,constraints);
-
     }
 
-   private void addComponent (int x , int y , int width , int fill , Component c   ){
+    private void addComponent(int x , int y , int width , int fill , Component c){
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = x;
         constraints.gridy = y;
@@ -144,7 +126,5 @@ public class ProductScreen extends JFrame {
         constraints.fill = GridBagConstraints.CENTER;
         constraints.anchor = GridBagConstraints.CENTER;
         add(c ,constraints);
-
     }
-
 }

@@ -1,14 +1,6 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-import java.util.*;
-public class Main{
-
+public class Main {
     public static void main(String[] args) {
-
-            ProductScreen productScreen = new ProductScreen();
-            CodeScreen CodeScreen = new CodeScreen();
-
-
-
+        ProductScreen productScreen = new ProductScreen();
+        CodeScreen codeScreen = new CodeScreen(productScreen.getProductList());
     }
 }
