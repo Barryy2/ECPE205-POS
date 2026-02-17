@@ -77,12 +77,14 @@ public class ProductScreen extends JFrame {
         addComponent(0,5, 2,new JScrollPane(table) );
 
 
+
         Savebutt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String sku = SKUtextfield.getText();
                 String name = Nametextfield.getText();
                 String price = Pricedtextfield.getText();
+
                 if (!sku.isEmpty() && !name.isEmpty() && !price.isEmpty()) {
                     prods.add(new Prods(sku, name, price));
                     ((AbstractTableModel) table.getModel()).fireTableDataChanged();
@@ -91,9 +93,8 @@ public class ProductScreen extends JFrame {
                     Nametextfield.setText("");
                     Pricedtextfield.setText("");
                 } else {
-                    JOptionPane.showMessageDialog(null, "ERROR ");
+                    JOptionPane.showMessageDialog(null, "Please fill in all fields.");
                 }
-
             }
         });
 
