@@ -40,7 +40,7 @@ public class ProductScreen extends JFrame {
 
         ArrayList<Prods> prods = new ArrayList<>();
         JTable table = new JTable(new AbstractTableModel() {
-            String [] columns = new String[] {"SKU" , "Last Name" , "Price"};
+            String [] columns = new String[] {"SKU" , "Name" , "Price"};
             public String getColumnName(int column){
 
                 return  columns[column];
