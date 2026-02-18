@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class CodeScreen extends JFrame {
@@ -12,13 +14,15 @@ public class CodeScreen extends JFrame {
     private JLabel totalLabel; //
 
     public CodeScreen(ArrayList<Prods> products) {
-        this.products = products; // store reference to ProductScreen products
+        this.products = products;
 
         Inputsku = new JTextField(20);
         JButton Enterbutton = new JButton("Enter");
         JLabel skuinput = new JLabel("Input Product: ");
         JLabel Price = new JLabel("Price: ");
         JLabel Total = new JLabel("Total: ");
+        JButton Seniordiscountbutton = new JButton("Add Senior Discount");
+
 
         setLayout(new GridBagLayout());
 
@@ -26,6 +30,7 @@ public class CodeScreen extends JFrame {
         addComponent(1, 0, Inputsku);
         addComponent(0, 0, skuinput);
         addComponent(2, 0, Enterbutton);
+        addComponent(3,0,Seniordiscountbutton);
 
         //Table pannel
         table = new JTable(new AbstractTableModel() {
@@ -132,6 +137,24 @@ public class CodeScreen extends JFrame {
             Inputsku.setText("");
         });
 
+
+
+        Seniordiscountbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SeniorDiscount();
+
+
+
+
+            }
+        });
+
+
+
+
+
+
         setTitle("Order Screen");
         setSize(300, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -147,7 +170,43 @@ public class CodeScreen extends JFrame {
             totalprice += Double.parseDouble(o.getAmount());
         }
 
+
         totalLabel.setText("Total: " + String.format("%.2f", totalprice));
+    }
+
+
+
+    private void SeniorDiscount(){
+        double Stotalprice = 0;
+        String Basicom = "Basic Commodity";
+        String Nonbasiccom = "Non Basic Commodity";
+
+        double Basictax = 0.05;
+
+
+        for(Prods  p : products){
+            if(p.getCommodities().equals("Non Basic Commodity")){
+
+                double temprice = Double.parseDouble(p.getPrice());
+                double Nbtax = temprice/(1.12 * 0.12);
+                double NbDisc = temprice/(1.12 * 0.20);
+                Stotalprice += temprice -(temprice/1.12*0.12)- (temprice/1.12*0.2);
+                //checker
+                //Stotalprice += temprice + temprice;
+
+            }else{
+                //finished
+                double temprice = Double.parseDouble(p.getPrice());
+
+                Stotalprice += temprice-(temprice * Basictax);
+
+            }
+
+        }
+
+
+        totalLabel.setText("Total: " + String.format("%.2f", Stotalprice));
+
     }
 
 

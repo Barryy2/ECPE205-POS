@@ -4,19 +4,29 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ProductScreen extends JFrame {
 
-    private ArrayList<Prods> prods = new ArrayList<>(); // <-- class-level
+    private ArrayList<Prods> prods = new ArrayList<>();
 
     public ProductScreen() {
+
+        //TASK1
+        String[] choices = {"Basic Commodity","Non Basic Commodity"};
+        final JComboBox<String> Choices = new JComboBox<String>(choices);
+
+        Choices.setSize(20,10);
         JLabel SKU = new JLabel("SKU: ");
         JLabel Name = new JLabel("Name: ");
         JLabel Price = new JLabel("Price: ");
+        JLabel CommodityList = new JLabel("Commodity");
+        JLabel Commodity = new JLabel("Commodity: ");
         JTextField SKUtextfield = new JTextField(30);
         JTextField Nametextfield = new JTextField(30);
         JTextField Pricedtextfield = new JTextField(30);
         JButton Savebutt = new JButton("Save");
+
 
         setLayout(new GridBagLayout());
 
@@ -24,16 +34,19 @@ public class ProductScreen extends JFrame {
         addComponent(0,0 , SKU);
         addComponent(0,1 , Name);
         addComponent(0 ,2,  Price);
+        addComponent(0,3,Commodity);
         // TEXTFIELDS
         addComponent(1,0,SKUtextfield);
         addComponent(1,1,Nametextfield);
         addComponent(1,2,Pricedtextfield);
         // BUTTON
         addComponent(1,4,Savebutt);
+        addComponent(1,3,Choices);
+
 
         // Table
         JTable table = new JTable(new AbstractTableModel() {
-            String [] columns = new String[] {"SKU" , "Name" , "Price"};
+            String [] columns = new String[] {"SKU" , "Name" , "Price", "Commodity"};
 
             @Override
             public String getColumnName(int column){
@@ -50,6 +63,9 @@ public class ProductScreen extends JFrame {
                 return columns.length;
             }
 
+
+
+
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 Prods p = prods.get(rowIndex);
@@ -57,6 +73,7 @@ public class ProductScreen extends JFrame {
                     case 0: return p.getSku();
                     case 1: return p.getName();
                     case 2: return p.getPrice();
+                    case 3: return p.getCommodities();
                     default: return null;
                 }
             }
@@ -71,16 +88,19 @@ public class ProductScreen extends JFrame {
                 String sku = SKUtextfield.getText();
                 String name = Nametextfield.getText();
                 String price = Pricedtextfield.getText();
+                //TASK 2
+                String comms = (String) Choices.getSelectedItem();
 
-                if (!sku.isEmpty() && !name.isEmpty() && !price.isEmpty()) {
-                    prods.add(new Prods(sku, name, price));
+                if (!sku.isEmpty() && !name.isEmpty() && !price.isEmpty()  ) {
+                    prods.add(new Prods(sku, name, price,comms));
                     ((AbstractTableModel) table.getModel()).fireTableDataChanged();
 
                     SKUtextfield.setText("");
                     Nametextfield.setText("");
                     Pricedtextfield.setText("");
+
                 } else {
-                    JOptionPane.showMessageDialog(null, "Please fill in all fields.");
+                    JOptionPane.showMessageDialog(null, "Error");
                 }
             }
         });
