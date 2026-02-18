@@ -92,16 +92,15 @@ public class ProductScreen extends JFrame {
         pack();
     }
 
-    // -----------------------------
-    // GETTER for external access
-    // -----------------------------
     public ArrayList<Prods> getProductList() {
         return prods;
     }
 
-    // -----------------------------
-    // AddComponent Methods
-    // -----------------------------
+
+
+
+
+
     private void addComponent(int x , int y , int width , Component c){
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = x;
