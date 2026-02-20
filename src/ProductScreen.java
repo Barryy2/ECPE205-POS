@@ -26,7 +26,7 @@ public class ProductScreen extends JFrame {
         JTextField Nametextfield = new JTextField(30);
         JTextField Pricedtextfield = new JTextField(30);
         JButton Savebutt = new JButton("Save");
-
+        JButton ClearButton = new JButton("Clear");
 
         setLayout(new GridBagLayout());
 
@@ -42,7 +42,7 @@ public class ProductScreen extends JFrame {
         // BUTTON
         addComponent(1,4,Savebutt);
         addComponent(1,3,Choices);
-
+        addComponent(3,6,ClearButton);
 
         // Table
         JTable table = new JTable(new AbstractTableModel() {
@@ -104,6 +104,17 @@ public class ProductScreen extends JFrame {
                 }
             }
         });
+
+        ClearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                prods.clear();
+                ((AbstractTableModel) table.getModel()).fireTableDataChanged();
+
+            }
+        });
+
 
         setTitle("ProductScreen");
         setSize(400, 500);
